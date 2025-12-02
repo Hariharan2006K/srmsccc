@@ -62,4 +62,3 @@ Notes:
 
 ---
 
-If you want, I can add a concise project README with instructions for serving the app via a local static server and include screenshots or a short demo GIF — tell me which you'd prefer next.

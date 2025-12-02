@@ -1,101 +1,65 @@
-# Email Application - Project 1
+# Student Report Management System (SRMS)
 
-## Project Overview
-This is an Email Application that simulates creating email accounts for new hires in an IT Support Administrator role. The application generates email addresses with specific syntax and provides functionality to manage email account settings.
+This repository contains a lightweight, vanilla JavaScript Student Report Management System (SRMS) — a multi-page frontend app that demonstrates role-based views, student records management, feedback/messages, and a polished UI.
 
-## Features Implemented
+Built for demonstration and learning purposes; it uses browser `localStorage` for persistence and no backend.
 
-### ✅ All Requirements Met:
-1. **Generate email with syntax**: `firstname.lastname@department.company.com`
-2. **Determine department**: Choose from sales, development, accounting, or leave blank
-3. **Generate random password**: Creates a secure random password
-4. **Set methods**: Change password, set mailbox capacity, define alternate email
-5. **Get methods**: Display name, email, and mailbox capacity
+## Highlights
 
-## How to Run
+- Multi-role login: **Admin**, **Student**, and **Parent** portals.
+- Admin: full CRUD for student records, view/manage feedback and parent messages.
+- Student: view-only personal academic record and submit feedback.
+- Parent: view their child's record and send messages to school (visible to Admin).
+- Responsive, modern UI with CSS variables, gradients and micro-interactions.
 
-### Prerequisites
-- Java JDK 8 or higher installed
-- Command line access
+## Demo Credentials
 
-### Compilation and Execution
-```bash
-# Compile the Java files
-javac Email.java EmailApp.java
+- Admin: username `admin` / password `admin123`
+- Students (example):
+	- `S001` / `student123` (John Smith)
+	- `S002` / `student123` (Emma Johnson)
+	- `S003` / `student123` (Michael Brown)
+	- `S004` / `student123` (Sarah Davis)
+- Parents (linked to students):
+	- `parent1@email.com` / `parent123` (linked to S001)
+	- `parent2@email.com` / `parent123` (linked to S002)
+	- `parent3@email.com` / `parent123` (linked to S003)
+	- `parent4@email.com` / `parent123` (linked to S004)
 
-# Run the application
-java EmailApp
-```
+## File Structure (important files)
 
-## Usage
+- `index.html` — Login page (Admin / Student / Parent tabs)
+- `admin-dashboard.html` — Admin interface (student management, feedback)
+- `student-dashboard.html` — Student portal (view record, submit feedback)
+- `parent-dashboard.html` — Parent portal (view child, send message)
+- `auth.js` — Authentication logic and demo data (students, parents)
+- `admin-script.js` — Admin dashboard behavior (CRUD, feedback UI)
+- `student-script.js` — Student dashboard behavior
+- `parent-script.js` — Parent dashboard behavior
+- `script.js` — Shared utilities (tab switching, helpers)
+- `styles.css` — Centralized styles (CSS variables, components)
 
-1. **Run the application**: Execute `java EmailApp`
-2. **Enter first name**: The program will prompt for the employee's first name
-3. **Enter last name**: The program will prompt for the employee's last name
-4. **Select department**: Choose from the available options:
-   - 1 for Sales
-   - 2 for Development  
-   - 3 for Accounting
-   - 0 for none (blank department)
-5. **View generated account**: The system will display the created email account
-6. **Modify settings**: Use the setter methods to customize the account
+## How to run (local)
 
-## Example Output
-```
-=== EMAIL APPLICATION ===
-Welcome to the Email Account Generator!
+1. Open the project folder in your file explorer.
+2. Open `index.html` in your browser (double-click or right-click → Open with).
+3. Use the demo credentials above to log in as Admin / Student / Parent.
 
-Enter first name: John
-Enter last name: Smith
+Notes:
+- The app stores data in the browser `localStorage` (students, feedback, sessions). Clearing browser storage will reset the demo data.
+- No server is required; this is a static front-end demo. For advanced testing, serve with a static server (e.g., `npx http-server` or `python -m http.server`).
 
-DEPARTMENT CODES:
-1 for Sales
-2 for Development
-3 for Accounting
-0 for none
-Enter department code: 2
+## Development notes
 
-=== EMAIL ACCOUNT CREATED ===
-DISPLAY NAME: John Smith
-COMPANY EMAIL: john.smith@development.company.com
-MAILBOX CAPACITY: 500mb
+- To add or edit demo students, update `auth.js` (the `students` array) or use the Admin UI to persist updates in `localStorage`.
+- Parent messages are stored alongside student feedback in `localStorage` and are visible to the Admin feedback view.
 
-=== DEMONSTRATING SETTER METHODS ===
-Mailbox capacity changed to: 1000mb
-Alternate email set to: john.smith.personal@gmail.com
-Password changed to: NewSecurePassword123!
+## Next steps (suggested)
 
-=== FINAL ACCOUNT INFO ===
-DISPLAY NAME: John Smith
-COMPANY EMAIL: john.smith@development.company.com
-MAILBOX CAPACITY: 1000mb
-```
+- Add a minimal backend (Node/Express) to persist data in a database.
+- Add authentication flow with hashed passwords.
+- Export/print student reports as PDF.
 
-## File Structure
-- `Email.java` - Main Email class with all functionality
-- `EmailApp.java` - Application runner and demonstration
-- `README.md` - This documentation file
+---
 
-## Technical Details
-
-### Email Class Features:
-- **Constructor**: Takes first name and last name
-- **Department Selection**: Interactive department choice
-- **Password Generation**: Random 8-character password
-- **Email Generation**: Automatic email address creation
-- **Setters**: Modify password, mailbox capacity, alternate email
-- **Getters**: Retrieve account information
-- **Display**: Show formatted account information
-
-### Security Features:
-- Random password generation with mixed characters
-- Secure password storage
-- Input validation for department selection
-
-## Project Requirements Fulfillment
-This implementation fully satisfies all the requirements specified in the project specification:
-- ✅ Email syntax generation
-- ✅ Department determination
-- ✅ Random password generation
-- ✅ Setter methods for customization
-- ✅ Getter methods for information retrieval 
+If you want, I can add a concise project README with instructions for serving the app via a local static server and include screenshots or a short demo GIF — tell me which you'd prefer next.

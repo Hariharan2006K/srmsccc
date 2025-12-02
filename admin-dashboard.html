@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Student Report Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Panel</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <ul>
+                        <li><a href="#" onclick="showSection('students')" class="nav-link active"><i class="icon">📋</i> Manage Students</a></li>
+                        <li><a href="#" onclick="showSection('add')" class="nav-link"><i class="icon">➕</i> Add Student</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Feedback</div>
+                    <ul>
+                        <li><a href="#" onclick="showSection('feedback')" class="nav-link"><i class="icon">💬</i> Student Feedback <span id="feedbackBadge" class="badge hidden">0</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <ul>
+                        <li><a href="#" onclick="logout()" class="nav-link"><i class="icon">🚪</i> Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="nav-menu">
+                    <span class="welcome-msg">Welcome Admin!</span>
+                </div>
+            </nav>
+
+            <!-- Manage Students Section -->
+            <div id="studentsSection" class="section active">
+                <div class="container">
+                    <h2>Student Records</h2>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search by name, roll number, or ID..." onkeyup="filterStudents()">
+                    </div>
+                    <div class="table-responsive">
+                        <table id="studentsTable" class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Roll No</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Grade</th>
+                                    <th>Address</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>GPA</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Student Section -->
+            <div id="addSection" class="section">
+                <div class="container">
+                    <h2>Add New Student</h2>
+                    <form id="addStudentForm" class="form-grid" onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="newRollNo">Roll Number:</label>
+                            <input type="text" id="newRollNo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newName">Name:</label>
+                            <input type="text" id="newName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newAge">Age:</label>
+                            <input type="number" id="newAge" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newGrade">Grade:</label>
+                            <input type="text" id="newGrade" placeholder="e.g., A, B, C" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newAddress">Address:</label>
+                            <textarea id="newAddress" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="newEmail">Email:</label>
+                            <input type="email" id="newEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPhone">Phone:</label>
+                            <input type="tel" id="newPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newGPA">GPA:</label>
+                            <input type="number" id="newGPA" step="0.01" min="0" max="4" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">Password:</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+                    </form>
+                    <div class="form-actions">
+                        <button onclick="addStudent()" class="btn-submit">Add Student</button>
+                        <button onclick="showSection('students')" class="btn-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Feedback Section -->
+            <div id="feedbackSection" class="section">
+                <div class="container">
+                    <h2>Student Feedback</h2>
+                    <div class="feedback-filter">
+                        <input type="text" id="feedbackSearch" placeholder="Search feedback..." onkeyup="filterFeedback()">
+                        <select id="feedbackCategoryFilter" onchange="filterFeedback()">
+                            <option value="">All Categories</option>
+                            <option value="academics">Academics</option>
+                            <option value="facilities">Facilities</option>
+                            <option value="teaching">Teaching Quality</option>
+                            <option value="administration">Administration</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div id="feedbackContainer" class="feedback-container">
+                    </div>
+                    <div id="noFeedback" class="info-box">
+                        <p>No feedback received yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Student Modal -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2>Edit Student Record</h2>
+            <form id="editStudentForm" class="form-grid" onsubmit="return false;">
+                <input type="hidden" id="editStudentId">
+                <div class="form-group">
+                    <label for="editRollNo">Roll Number:</label>
+                    <input type="text" id="editRollNo" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editName">Name:</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editAge">Age:</label>
+                    <input type="number" id="editAge" required>
+                </div>
+                <div class="form-group">
+                    <label for="editGrade">Grade:</label>
+                    <input type="text" id="editGrade" required>
+                </div>
+                <div class="form-group">
+                    <label for="editAddress">Address:</label>
+                    <textarea id="editAddress" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">Email:</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPhone">Phone:</label>
+                    <input type="tel" id="editPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="editGPA">GPA:</label>
+                    <input type="number" id="editGPA" step="0.01" min="0" max="4" required>
+                </div>
+            </form>
+            <div class="modal-actions">
+                <button onclick="updateStudent()" class="btn-submit">Update</button>
+                <button onclick="closeEditModal()" class="btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

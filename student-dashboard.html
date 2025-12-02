@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Student Report Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Student Portal</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Academic</div>
+                    <ul>
+                        <li><a href="#" onclick="showSection('record')" class="nav-link active"><i class="icon">📚</i> My Record</a></li>
+                        <li><a href="#" onclick="showSection('grades')" class="nav-link"><i class="icon">📊</i> My Grades</a></li>
+                        <li><a href="#" onclick="showSection('attendance')" class="nav-link"><i class="icon">✓</i> Attendance</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Feedback</div>
+                    <ul>
+                        <li><a href="#" onclick="showSection('feedback')" class="nav-link"><i class="icon">💬</i> Send Feedback</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Account</div>
+                    <ul>
+                        <li><a href="#" onclick="logout()" class="nav-link"><i class="icon">🚪</i> Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="nav-menu">
+                    <span class="welcome-msg" id="studentWelcome"></span>
+                </div>
+            </nav>
+
+            <!-- My Record Section -->
+            <div id="recordSection" class="section active">
+                <div class="container student-view">
+                    <h2>Your Academic Record</h2>
+                    <div class="student-record">
+                        <div class="record-grid">
+                            <div class="record-item">
+                                <label>Roll Number:</label>
+                                <p id="viewRollNo"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Name:</label>
+                                <p id="viewName"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Age:</label>
+                                <p id="viewAge"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Grade:</label>
+                                <p id="viewGrade"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Address:</label>
+                                <p id="viewAddress"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Email:</label>
+                                <p id="viewEmail"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Phone:</label>
+                                <p id="viewPhone"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>GPA:</label>
+                                <p id="viewGPA"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Grades Section -->
+            <div id="gradesSection" class="section">
+                <div class="container">
+                    <h2>My Grades</h2>
+                    <div class="info-box">
+                        <p>Grade information will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attendance Section -->
+            <div id="attendanceSection" class="section">
+                <div class="container">
+                    <h2>Attendance Details</h2>
+                    <div class="info-box">
+                        <p>Attendance information will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div id="feedbackSection" class="section">
+                <div class="container">
+                    <h2>Send Feedback</h2>
+                    <div class="feedback-form-container">
+                        <form id="feedbackForm" class="feedback-form" onsubmit="return false;">
+                            <div class="form-group">
+                                <label for="feedbackSubject">Subject:</label>
+                                <input type="text" id="feedbackSubject" placeholder="Enter subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedbackCategory">Category:</label>
+                                <select id="feedbackCategory" required>
+                                    <option value="">-- Select Category --</option>
+                                    <option value="academics">Academics</option>
+                                    <option value="facilities">Facilities</option>
+                                    <option value="teaching">Teaching Quality</option>
+                                    <option value="administration">Administration</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedbackMessage">Message:</label>
+                                <textarea id="feedbackMessage" placeholder="Enter your feedback here..." rows="6" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedbackRating">Rating (1-5):</label>
+                                <div class="rating-input">
+                                    <select id="feedbackRating" required>
+                                        <option value="">-- Select Rating --</option>
+                                        <option value="1">⭐ 1 - Very Poor</option>
+                                        <option value="2">⭐⭐ 2 - Poor</option>
+                                        <option value="3">⭐⭐⭐ 3 - Average</option>
+                                        <option value="4">⭐⭐⭐⭐ 4 - Good</option>
+                                        <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-actions">
+                            <button onclick="submitFeedback()" class="btn-submit">Submit Feedback</button>
+                            <button onclick="resetFeedbackForm()" class="btn-cancel">Clear</button>
+                        </div>
+                    </div>
+                    <div id="feedbackSuccess" class="alert-box alert-success hidden">
+                        <p>✓ Your feedback has been submitted successfully!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="student-script.js"></script>
+</body>
+</html>

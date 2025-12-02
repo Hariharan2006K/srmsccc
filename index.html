@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report Management System - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Student Report Management System</h1>
+            <div class="login-tabs">
+                <button type="button" class="tab-btn active" onclick="switchLoginType('admin'); return false;">Admin</button>
+                <button type="button" class="tab-btn" onclick="switchLoginType('student'); return false;">Student</button>
+                <button type="button" class="tab-btn" onclick="switchLoginType('parent'); return false;">Parent</button>
+            </div>
+
+            <!-- Admin Login Form -->
+            <form id="adminLoginForm" class="login-form active" onsubmit="return false;">
+                <h2>Admin Login</h2>
+                <div class="form-group">
+                    <label for="adminUsername">Username:</label>
+                    <input type="text" id="adminUsername" placeholder="Enter admin username" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password:</label>
+                    <input type="password" id="adminPassword" placeholder="Enter password" required>
+                </div>
+                <button type="button" onclick="loginAdmin()" class="btn-login">Login</button>
+                <p class="hint">Demo: admin / admin123</p>
+            </form>
+
+            <!-- Student Login Form -->
+            <form id="studentLoginForm" class="login-form" onsubmit="return false;">
+                <h2>Student Login</h2>
+                <div class="form-group">
+                    <label for="studentRollNo">Roll Number:</label>
+                    <input type="text" id="studentRollNo" placeholder="Enter roll number" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentPassword">Password:</label>
+                    <input type="password" id="studentPassword" placeholder="Enter password" required>
+                </div>
+                <button type="button" onclick="loginStudent()" class="btn-login">Login</button>
+                <p class="hint">Demo: S001 / student123</p>
+            </form>
+
+            <!-- Parent Login Form -->
+            <form id="parentLoginForm" class="login-form" onsubmit="return false;">
+                <h2>Parent Login</h2>
+                <div class="form-group">
+                    <label for="parentEmail">Email:</label>
+                    <input type="email" id="parentEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="parentPassword">Password:</label>
+                    <input type="password" id="parentPassword" placeholder="Enter password" required>
+                </div>
+                <button type="button" onclick="loginParent()" class="btn-login">Login</button>
+                <p class="hint">Demo: parent1@email.com / parent123</p>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Robust tab handling: attach listeners and ensure parent tab works
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
+            tabBtns.forEach((btn) => {
+                // Ensure pointer events and a data-type attribute
+                btn.style.pointerEvents = 'auto';
+                if (!btn.dataset.type) {
+                    btn.dataset.type = btn.textContent.trim().toLowerCase();
+                }
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const type = this.dataset.type;
+                    console.log('Tab clicked:', type);
+
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
+
+                    this.classList.add('active');
+                    const form = document.getElementById(type + 'LoginForm');
+                    if (form) {
+                        form.classList.add('active');
+                    } else {
+                        console.warn('No form element found for', type + 'LoginForm');
+                    }
+                });
+            });
+
+            // Ensure default tab remains admin if present
+            const defaultBtn = document.querySelector('.tab-btn.active') || tabBtns[0];
+            if (defaultBtn) defaultBtn.click();
+        });
+    </script>
+</body>
+</html>

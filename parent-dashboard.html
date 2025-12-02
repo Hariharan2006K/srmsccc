@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Dashboard - Student Report Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Parent Portal</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Academic</div>
+                    <ul>
+                        <li><a href="#" onclick="showSection('record')" class="nav-link active"><i class="icon">📚</i> Child's Record</a></li>
+                        <li><a href="#" onclick="showSection('grades')" class="nav-link"><i class="icon">📊</i> Grades</a></li>
+                        <li><a href="#" onclick="showSection('attendance')" class="nav-link"><i class="icon">✓</i> Attendance</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Communication</div>
+                    <ul>
+                        <li><a href="#" onclick="showSection('feedback')" class="nav-link"><i class="icon">💬</i> Send Message</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Account</div>
+                    <ul>
+                        <li><a href="#" onclick="logout()" class="nav-link"><i class="icon">🚪</i> Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="nav-menu">
+                    <span class="welcome-msg" id="parentWelcome"></span>
+                </div>
+            </nav>
+
+            <!-- Child's Record Section -->
+            <div id="recordSection" class="section active">
+                <div class="container student-view">
+                    <h2>Your Child's Academic Record</h2>
+                    <div class="student-record">
+                        <div class="record-grid">
+                            <div class="record-item">
+                                <label>Roll Number:</label>
+                                <p id="viewRollNo"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Name:</label>
+                                <p id="viewName"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Age:</label>
+                                <p id="viewAge"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Grade:</label>
+                                <p id="viewGrade"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Address:</label>
+                                <p id="viewAddress"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Email:</label>
+                                <p id="viewEmail"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>Phone:</label>
+                                <p id="viewPhone"></p>
+                            </div>
+                            <div class="record-item">
+                                <label>GPA:</label>
+                                <p id="viewGPA"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grades Section -->
+            <div id="gradesSection" class="section">
+                <div class="container">
+                    <h2>Child's Grades</h2>
+                    <div class="info-box">
+                        <p>Grade information will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attendance Section -->
+            <div id="attendanceSection" class="section">
+                <div class="container">
+                    <h2>Child's Attendance Details</h2>
+                    <div class="info-box">
+                        <p>Attendance information will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback/Message Section -->
+            <div id="feedbackSection" class="section">
+                <div class="container">
+                    <h2>Send Message to School</h2>
+                    <div class="feedback-form-container">
+                        <form id="parentMessageForm" class="feedback-form" onsubmit="return false;">
+                            <div class="form-group">
+                                <label for="messageSubject">Subject:</label>
+                                <input type="text" id="messageSubject" placeholder="Enter subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="messageCategory">Category:</label>
+                                <select id="messageCategory" required>
+                                    <option value="">-- Select Category --</option>
+                                    <option value="academics">Academics</option>
+                                    <option value="discipline">Discipline</option>
+                                    <option value="health">Health & Safety</option>
+                                    <option value="facilities">Facilities</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="messageContent">Message:</label>
+                                <textarea id="messageContent" placeholder="Enter your message here..." rows="6" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="messageRating">Concern Priority:</label>
+                                <div class="rating-input">
+                                    <select id="messageRating" required>
+                                        <option value="">-- Select Priority --</option>
+                                        <option value="1">🔵 Low Priority</option>
+                                        <option value="2">🟡 Medium Priority</option>
+                                        <option value="3">🔴 High Priority</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-actions">
+                            <button onclick="submitParentMessage()" class="btn-submit">Send Message</button>
+                            <button onclick="resetParentForm()" class="btn-cancel">Clear</button>
+                        </div>
+                    </div>
+                    <div id="messageSuccess" class="alert-box alert-success hidden">
+                        <p>✓ Your message has been sent successfully!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="parent-script.js"></script>
+</body>
+</html>
